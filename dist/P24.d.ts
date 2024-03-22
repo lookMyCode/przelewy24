@@ -8,6 +8,8 @@ import { RegisterTransactionResponse } from './types/RegisterTransactionResponse
 import { TransactionNotificationConfig } from './types/TransactionNotificationConfig';
 import { RefundResponse } from './types/RefundResponse';
 import { P24Config } from './types/P24Config';
+import { PayWithCardConfig } from './types/PayWithCardConfig';
+import { PayWithCardResponse } from './types/PayWithCardResponse';
 export declare class P24 {
     private prod;
     private baseURL;
@@ -29,5 +31,6 @@ export declare class P24 {
     verifyNotificationAndTransaction(data: TransactionNotificationConfig & VerifyTransactionConfig): Promise<boolean>;
     refund(data: RefundConfig): Promise<RefundResponse[]>;
     verifyRefundNotification(data: RefundNotificationConfig): boolean;
+    payWithCard(data: PayWithCardConfig): Promise<PayWithCardResponse>;
     private createAxiosInstance;
 }

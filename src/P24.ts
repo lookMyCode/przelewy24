@@ -13,6 +13,8 @@ import { TransactionNotificationConfig } from './types/TransactionNotificationCo
 import { RefundResponse } from './types/RefundResponse';
 import { P24ConfigDefaultValues } from './types/P24ConfigDefaultValues';
 import { P24Config } from './types/P24Config';
+import { PayWithCardConfig } from './types/PayWithCardConfig';
+import { PayWithCardResponse } from './types/PayWithCardResponse';
 
 
 const PROD_BASE_URL = 'https://secure.przelewy24.pl';
@@ -473,6 +475,16 @@ export class P24 {
     const notificationData = {...data};
     const sign = this.signUtils.getRefundNotificationSign(notificationData);
     return sign === data.sign;
+  }
+
+  async payWithCard(data: PayWithCardConfig): Promise<PayWithCardResponse> {
+    const res = await this.axiosInstance.post('/card/pay', data);
+    const resp: PayWithCardResponse = {
+      ...res.data.data,
+      requires3DSRedirection: res.status === 201,
+    }
+    
+    return resp;
   }
 
   private createAxiosInstance() {

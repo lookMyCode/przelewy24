@@ -220,6 +220,20 @@ var P24 = (function () {
         var sign = this.signUtils.getRefundNotificationSign(notificationData);
         return sign === data.sign;
     };
+    P24.prototype.payWithCard = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var res, resp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.axiosInstance.post('/card/pay', data)];
+                    case 1:
+                        res = _a.sent();
+                        resp = __assign(__assign({}, res.data.data), { requires3DSRedirection: res.status === 201 });
+                        return [2, resp];
+                }
+            });
+        });
+    };
     P24.prototype.createAxiosInstance = function () {
         this.axiosInstance = axios_1.default.create({
             baseURL: this.baseApiURL,
