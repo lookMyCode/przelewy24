@@ -15,6 +15,7 @@ import { P24ConfigDefaultValues } from './types/P24ConfigDefaultValues';
 import { P24Config } from './types/P24Config';
 import { PayWithCardConfig } from './types/PayWithCardConfig';
 import { PayWithCardResponse } from './types/PayWithCardResponse';
+import { CardInfoResponse } from './types/CardInfoResponse';
 
 
 const PROD_BASE_URL = 'https://secure.przelewy24.pl';
@@ -485,6 +486,11 @@ export class P24 {
     }
     
     return resp;
+  }
+
+  async getCardInfo(orderId: number | string): Promise<CardInfoResponse> {
+    const res = await this.axiosInstance.get(`/card/info/${orderId}`);
+    return res.data.data;
   }
 
   private createAxiosInstance() {
